@@ -16,7 +16,14 @@ export const parameters = {
       order: [
         'Gamut',
         'Foundations',
-        ['About', 'Theme', 'System', 'Design Guidelines', 'Legacy'],
+        [
+          'About',
+          'Theme',
+          'ColorMode',
+          'System',
+          'Design Guidelines',
+          'Legacy',
+        ],
         'Typography',
         'Layouts',
         'Atoms',
@@ -39,16 +46,22 @@ export const parameters = {
     },
   },
   backgrounds: {
+    default: 'light',
+    values: [
+      {
+        name: 'light',
+        value: 'light',
+      },
+      {
+        name: 'dark',
+        value: 'dark',
+      },
+    ],
     grid: {
-      cellSize: 20,
+      cellSize: 8,
       opacity: 0.5,
       cellAmount: 5,
     },
-    values: [
-      { name: 'White', value: colors.white },
-      { name: 'Navy', value: colors.navy },
-      { name: 'Beige', value: colors.beige },
-    ],
   },
   viewport: {
     defaultViewport: 'responsive',

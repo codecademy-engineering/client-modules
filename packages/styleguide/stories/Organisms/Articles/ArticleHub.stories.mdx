@@ -1,0 +1,53 @@
+import { Box, ContentContainer } from '@codecademy/gamut';
+import { ArticleHub, GlobalHeader } from '@codecademy/gamut-labs';
+import { Background } from '@codecademy/gamut-styles';
+import title from '@codecademy/macros/lib/title.macro';
+import { Canvas, Meta, Story } from '@storybook/addon-docs/dist/blocks';
+
+import { PropsTable } from '~styleguide/blocks';
+
+import { articles } from './stubArticle';
+
+<Meta
+  title={title}
+  component={ArticleHub}
+  parameters={{
+    subtitle: 'ArticleHub',
+    source: 'gamut-labs',
+    status: '',
+    figmaId: '',
+    viewMode: 'canvas',
+    layout: 'fullscreen',
+  }}
+  decorators={[
+    (Story, args) => (
+      <Background
+        initialBackground={
+          args?.globals?.backgrounds?.value === 'dark' ? 'navy' : 'paleGreen'
+        }
+        minHeight="100vh"
+        position="relative"
+      >
+        <GlobalHeader
+          action={() => {}}
+          type="free"
+          user={{
+            avatar:
+              'https://www.gravatar.com/avatar/1c959a9a1e2f9f9f1ac06b05cccc1d60?s=150&d=retro',
+            displayName: 'Codey',
+          }}
+        />
+        <Box paddingY={32}>
+          <ContentContainer>{Story()}</ContentContainer>
+        </Box>
+      </Background>
+    ),
+  ]}
+  args={{ articles }}
+/>
+
+<Canvas>
+  <Story name="Article">{(args) => <ArticleHub {...args} />}</Story>
+</Canvas>
+
+<PropsTable story="Article" />
