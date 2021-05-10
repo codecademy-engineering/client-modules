@@ -1,0 +1,42 @@
+import { PopoverContainer } from '@codecademy/gamut';
+import title from '@codecademy/macros/lib/title.macro';
+import { Canvas, Meta, Story } from '@storybook/addon-docs/blocks';
+
+import { SingleDirection } from './examples.tsx';
+
+<Meta
+  title={title}
+  component={PopoverContainer}
+  parameters={{
+    subtitle: 'Blah',
+    source: 'gamut',
+    status: 'current',
+    figmaId: '',
+  }}
+  argTypes={{
+    targetRef: {
+      control: {
+        disable: true,
+      },
+    },
+  }}
+  args={{
+    alignment: 'top-left',
+    isOpen: true,
+    inline: true,
+    inside: false,
+    x: 0,
+    y: 0,
+    offset: 20,
+  }}
+/>
+
+<Canvas>
+  <Story name="Single Directions">
+    <SingleDirection />
+  </Story>
+</Canvas>
+
+## Code Playground
+
+Edit attributes and see what’s possible to do with this component or get the exact output you want.
