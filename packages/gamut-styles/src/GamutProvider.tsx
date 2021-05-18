@@ -8,8 +8,8 @@ import {
 import React, { useContext, useRef } from 'react';
 
 import { createEmotionCache } from './cache';
-import { Reboot, Typography } from './globals';
-import { Variables } from './globals/Variables';
+import { Reboot, Scrollbars, Typography } from './globals';
+import { GlobalVariables } from './GlobalVariables';
 import { theme as baseTheme, variables as baseVariables } from './theme';
 
 export interface GamutProviderProps {
@@ -56,7 +56,8 @@ export const GamutProvider: React.FC<GamutProviderProps> = ({
     <>
       <Typography />
       <Reboot />
-      <Variables variables={variables} />
+      <Scrollbars />
+      <GlobalVariables variables={variables} />
     </>
   );
 

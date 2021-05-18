@@ -20,6 +20,7 @@ export const { theme, variables, getColorValue } = createTheme({
       text: 'navy',
       background: 'white',
       shadow: 'lightShadow',
+      scrollbar: 'gray-300',
     },
     dark: {
       primary: 'yellow',
@@ -27,6 +28,7 @@ export const { theme, variables, getColorValue } = createTheme({
       text: 'white',
       background: 'navy',
       shadow: 'darkShadow',
+      scrollbar: 'gray-600',
     },
   })
   .addScale('borders', ({ colors }) => ({
