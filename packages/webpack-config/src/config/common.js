@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const TerserPlugin = require('terser-webpack-plugin');
+const { merge } = require('webpack-merge');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const loaders = require('../loaders');
 const ENV = require('../lib/env');
 
@@ -11,7 +11,6 @@ const commonConfig = (options = {}) => {
     env = ENV,
     minimizer,
     minimizerOptions = {},
-    fileLoaderOptions = {},
     includeDefaults = true,
   } = options;
   const DEV = env !== 'production';
@@ -26,26 +25,22 @@ const commonConfig = (options = {}) => {
     entry: path.resolve(options.context, 'src/main.js'),
 
     output: {
-      filename: DEV ? '[name].js' : '[name].[contenthash].js',
-      chunkFilename: DEV ? '[name].chunk.js' : '[name].[contenthash].chunk.js',
+      filename: DEV ? '[name].js' : '[name].[contenthash:8].js',
+      chunkFilename: DEV
+        ? '[name].chunk.js'
+        : '[name].[contenthash:8].chunk.js',
       path: path.resolve(options.context, 'dist'),
+      assetModuleFilename: DEV ? '[path][name].[ext]' : '[contenthash:8].[ext]',
+    },
+
+    optimization: {
+      chunkIds: DEV ? 'named' : 'deterministic',
+      moduleIds: DEV ? 'named' : 'deterministic',
     },
 
     module: {
       strictExportPresence: true,
-      rules: includeDefaults
-        ? [
-            {
-              ...loaders.files.default,
-              options: {
-                name: DEV
-                  ? '[name].[contenthash].[ext]'
-                  : '[contenthash].[ext]',
-                ...fileLoaderOptions,
-              },
-            },
-          ]
-        : [],
+      rules: [includeDefaults && loaders.files.default].filter(Boolean),
     },
 
     resolve: {
@@ -73,7 +68,7 @@ const commonConfig = (options = {}) => {
   };
 
   if (DEV) {
-    config = merge.smart(config, {
+    config = merge(config, {
       output: {
         devtoolModuleFilenameTemplate: '[absolute-resource-path]',
         devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]',
@@ -81,21 +76,33 @@ const commonConfig = (options = {}) => {
       plugins: [new CaseSensitivePathsPlugin()],
     });
   } else {
-    config = merge.smart(config, {
+    config = merge(config, {
       bail: true, // Don't try to continue through any errors
       optimization: {
-        moduleIds: 'hashed',
         minimize: true,
         minimizer: minimizer || [
           new TerserPlugin({
-            cache: true,
             parallel: true,
-            sourceMap: true,
             terserOptions: {
-              compress: {
-                inline: 1, // Fix for https://github.com/mishoo/UglifyJS2/issues/2842
+              parse: {
+                ecma: 8,
               },
+              compress: {
+                ecma: 5,
+                warnings: false,
+                comparisons: false,
+                inline: 2,
+              },
+              mangle: {
+                safari10: true,
+              },
+              keep_classnames: true,
               keep_fnames: true,
+              output: {
+                ecma: 5,
+                comments: false,
+                ascii_only: true,
+              },
               ...minimizerOptions.terserOptions,
             },
             ...minimizerOptions,

@@ -1,10 +1,7 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-
 const devServerConfig = (options) => {
   const { port = 3808, host = 'localhost', publicPath, ...rest } = options;
 
-  return merge.smart({
+  return {
     output: {
       publicPath: publicPath || `http://localhost:${port}/dist/`,
     },
@@ -32,12 +29,7 @@ const devServerConfig = (options) => {
       },
       ...rest,
     },
-
-    plugins: [
-      new webpack.NoEmitOnErrorsPlugin(),
-      new webpack.NamedModulesPlugin(),
-    ],
-  });
+  };
 };
 
 module.exports = devServerConfig;

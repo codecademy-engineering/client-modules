@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const configs = require('./config');
 
 class WebpackConfig {
@@ -23,7 +23,7 @@ class WebpackConfig {
   }
 
   merge(config) {
-    this.value = merge.smart(this.value, config);
+    this.value = merge(this.value, config);
     return this;
   }
 

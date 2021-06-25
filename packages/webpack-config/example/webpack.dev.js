@@ -5,8 +5,10 @@ module.exports = createConfig()
     context: __dirname,
     env: 'development',
   })
+  .babel()
   .css()
   .devServer({
     port: 4102,
   })
+  .merge({})
   .toConfig();
