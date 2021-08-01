@@ -72,6 +72,14 @@ export type GridFormProps<Values extends {}> = {
      * Manually overrides the submit button to be disabled regardless of validation, if true.
      */
     disabled?: boolean;
+    /**
+     * Compute whether the submit button should be disabled based on current state.
+     */
+    shouldDisable?: (
+      invalid?: boolean,
+      submitting?: boolean,
+      validating?: boolean
+    ) => boolean;
   };
 
   /**
@@ -110,6 +118,16 @@ export function GridForm<
     ),
     mode: validation,
   });
+
+  const isInvalid = validation === 'onChange' && !formState.isValid;
+  const submitDisabled =
+    submit.disabled ||
+    isInvalid ||
+    submit?.shouldDisable?.(
+      isInvalid,
+      formState.isSubmitting,
+      formState.isValidating
+    );
 
   return (
     <FormProvider
@@ -153,10 +171,7 @@ export function GridForm<
           <GridFormButtons
             cancel={cancel}
             {...submit}
-            disabled={
-              (validation === 'onChange' && !formState.isValid) ||
-              submit.disabled
-            }
+            disabled={submitDisabled}
           />
           {children}
         </LayoutGrid>
