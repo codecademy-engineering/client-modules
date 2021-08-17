@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
 import useLanguageService from '../libs/languageServices/useLanguageService';
+import { LanguageId } from '../libs/services/languageIds';
+import { createMonacoOptions } from './createMonacoOptions';
 import { SimpleMonacoEditor } from './SimpleMonacoEditor';
 import { Editor, EditorInterfaceSettings, Monaco, MonacoFile } from './types';
 import { useDeltaDecorations } from './useDeltaDecorations';
+import { useEditorSettings } from './useEditorSettings';
 import { MonacoThemeType, useEditorTheming } from './useEditorTheming';
 
 export type MonacoEditorProps = {
@@ -13,40 +16,51 @@ export type MonacoEditorProps = {
   readOnly?: boolean;
   theme?: MonacoThemeType;
   editorInterfaceSettings?: EditorInterfaceSettings;
-};
-
-export const defaultUserInterfaceSettings: EditorInterfaceSettings = {
-  autoCloseTokens: true,
-  editorFontSize: 'reg',
-  highContrast: false,
-  renderWhitespace: false,
-  screenReader: false,
+  updateEditorInterfaceSettings?: (setting: string) => void;
 };
 
 export const MonacoEditor: React.FC<MonacoEditorProps> = ({
+  className,
   file,
   onChange,
+  readOnly,
   theme = MonacoThemeType.static,
   editorInterfaceSettings,
+  updateEditorInterfaceSettings,
 }) => {
-  // TODO import editor settings hook
   const [editor, setEditor] = useState<Editor.IStandaloneCodeEditor>();
   const [monaco, setMonaco] = useState<Monaco>();
   const languageService = useLanguageService(file.name || '', editor, monaco);
 
   useDeltaDecorations(editor, languageService.registration);
   useEditorTheming(
-    editorInterfaceSettings || defaultUserInterfaceSettings,
+    editorInterfaceSettings,
+    updateEditorInterfaceSettings,
     editor,
     monaco,
     theme
+  );
+  useEditorSettings(
+    editorInterfaceSettings,
+    updateEditorInterfaceSettings,
+    editor,
+    monaco
   );
 
   return (
     <SimpleMonacoEditor
       file={file}
+      languageId={languageService.id || LanguageId.Default}
       onChange={onChange}
-      options={{}}
+      options={{
+        ...createMonacoOptions(
+          className,
+          editorInterfaceSettings,
+          languageService.id
+        ),
+        readOnly,
+        ariaLabel: file.name,
+      }}
       setEditor={setEditor}
       setMonaco={setMonaco}
     />
