@@ -56,15 +56,10 @@ const getAppHeaderItems = (
       return freeHeaderItems(
         props.user,
         props.hidePricing,
-        props.renderNotifications?.desktop,
         props.renderFavorites?.desktop
       );
     case 'pro':
-      return proHeaderItems(
-        props.user,
-        props.renderNotifications?.desktop,
-        props.renderFavorites?.desktop
-      );
+      return proHeaderItems(props.user, props.renderFavorites?.desktop);
     case 'loading':
       return loadingHeaderItems;
   }
@@ -86,16 +81,9 @@ const getMobileAppHeaderItems = (
           return anonDefaultMobileHeaderItems(props.hidePricing);
       }
     case 'free':
-      return freeMobileHeaderItems(
-        props.user,
-        props.hidePricing,
-        props.renderNotifications?.mobile
-      );
+      return freeMobileHeaderItems(props.user, props.hidePricing);
     case 'pro':
-      return proMobileHeaderItems(
-        props.user,
-        props.renderNotifications?.mobile
-      );
+      return proMobileHeaderItems(props.user);
     case 'loading':
       return loadingMobileHeaderItems;
   }
@@ -158,9 +146,15 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = (props) => {
           action={combinedAction}
           items={getAppHeaderItems(props)}
           search={props.search}
-          redirectParam={
-            props.type === 'anon' ? props.redirectParam : undefined
-          }
+          {...(props.type === 'anon'
+            ? {
+                redirectParam: props.redirectParam,
+              }
+            : props.type === 'loading'
+            ? {}
+            : {
+                notifications: props.notifications,
+              })}
         />
       </HeaderContainer>
       <HeaderContainer
@@ -171,6 +165,11 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = (props) => {
         <AppHeaderMobile
           action={combinedAction}
           items={getMobileAppHeaderItems(props)}
+          {...(props.type === 'anon' || props.type === 'loading'
+            ? {}
+            : {
+                notifications: props.notifications,
+              })}
           onSearch={props.search.onSearch}
           redirectParam={
             props.type === 'anon' ? props.redirectParam : undefined

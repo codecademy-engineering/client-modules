@@ -1,5 +1,4 @@
-import { Box, IconButton } from '@codecademy/gamut/src';
-import { BellIcon } from '@codecademy/gamut-icons/src';
+import { Box } from '@codecademy/gamut/src';
 import { GlobalHeader } from '@codecademy/gamut-labs/src';
 import title from '@codecademy/macros/lib/title.macro';
 import { PropsTable } from '@codecademy/storybook-addon-variance';
@@ -97,6 +96,21 @@ The following are available variations for the GlobalHeader component.
       <Box position="relative" zIndex={0}>
         <GlobalHeader
           action={() => {}}
+          notifications={{
+            baseUrl: '',
+            notifications: [
+              {
+                campaign: 'existence_is_pain',
+                date: '5 hours',
+                id: '1',
+                link: 'https://codecademy.com',
+                text: "Look at me! I'm Mr. Notification!",
+                unread: true,
+              },
+            ],
+            onEnable: () => {},
+            onTrackingClick: () => {},
+          }}
           search={{
             onEnable: () => {},
             onSearch: () => {},
@@ -124,6 +138,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -148,6 +177,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -174,6 +218,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -197,6 +256,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -221,6 +295,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -245,6 +334,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -270,6 +374,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -294,6 +413,21 @@ The Try Pro For Free button can take in an optional custom path.
     {(args) => (
       <GlobalHeader
         action={() => {}}
+        notifications={{
+          baseUrl: '',
+          notifications: [
+            {
+              campaign: 'existence_is_pain',
+              date: '5 hours',
+              id: '1',
+              link: 'https://codecademy.com',
+              text: "Look at me! I'm Mr. Notification!",
+              unread: true,
+            },
+          ],
+          onEnable: () => {},
+          onTrackingClick: () => {},
+        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
@@ -397,10 +531,6 @@ To mock this, IconButtons are provided as placeholders.
     {(args) => (
       <GlobalHeader
         action={() => {}}
-        renderNotifications={{
-          desktop: () => <IconButton icon={BellIcon} />,
-          mobile: () => <IconButton icon={BellIcon} />,
-        }}
         search={{
           onEnable: () => {},
           onSearch: () => {},
