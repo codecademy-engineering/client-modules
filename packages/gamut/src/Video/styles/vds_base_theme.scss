@@ -1,0 +1,42 @@
+@import "~@vidstack/react/player/styles/default/theme.css";
+@import "~@vidstack/react/player/styles/default/layouts/video.css";
+@import "~@vidstack/react/player/styles/default/layouts/audio.css";
+
+.vds-controls button {
+    border-radius: var(--media-button-border-radius);
+}
+
+.vds-video-layout .vds-time-slider .vds-slider-value {
+    border: unset;
+    color: white;
+}
+
+iframe.vds-youtube[data-no-controls] {
+    height: 100%;
+}
+
+[data-started] iframe.vds-youtube[data-no-controls] {
+    height: 1000%;
+}
+
+:where(.vds-button .vds-icon) {
+    border-radius: unset;
+}
+
+.vds-tooltip-content::after {
+    content: "";
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-style: solid;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    border-width: 0 1px 1px 0;
+    border-color: currentColor;
+    bottom: -0.5rem;
+    left: calc(50% - 0.5rem);
+    background-image: linear-gradient(to top left, var(--color-background-contrast) 55%, rgba(0, 0, 0, 0) 20%);
+}
