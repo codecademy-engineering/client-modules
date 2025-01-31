@@ -1,54 +1,90 @@
 import * as React from 'react';
 
-import { FlexBox } from '../Box';
-import { Text } from '../Typography';
+import { appendIconToContent } from '../helpers';
 import {
+  DefaultMiniDeleteIcon,
   DismissButton,
+  LargeMiniDeleteIcon,
   Outline,
-  StyledMiniDeleteIcon,
+  TagAnchor,
   TagLabelWrapper,
+  TagText,
 } from './elements';
-import { tagLabelFontSize, tagLabelPadding } from './styles';
 import { TagProps } from './types';
 
 export const Tag: React.FC<TagProps> = ({
   children,
-  variant,
-  readonly,
+  variant = 'readOnly',
   onDismiss,
+  href = '',
+  onClick,
+  disabled = false,
+  size,
+  icon,
   ...rest
 }) => {
+  const isReadOnly = variant === 'readOnly'
+  const isSelection = variant === 'selection';
+  const isNavigation = variant === 'navigation';
+  const isSuggestion = variant === 'suggestion';
+  const isInteractive = isNavigation || isSuggestion;
+  const isLarge = size === 'large';
+
+
+  const content = appendIconToContent({
+    children,
+    icon,
+    iconAndTextGap: 8,
+    iconPosition: 'left',
+    iconSize: 16,
+  });
+
+  const sharedInteractiveProps = {
+    size,
+    disabled,
+  }
+
+  const CorrectLabel = (
+    () => {
+      if(isReadOnly) {
+        return <TagText size={size}>{content}</TagText>;
+      }
+      if(isSelection) {
+        return <TagText {...sharedInteractiveProps}>{content}</TagText>;
+      }
+      if(isNavigation){
+        return <TagAnchor interactiveType='navigation' href={disabled ? '' : href} onClick={onClick} {...sharedInteractiveProps}>{content}</TagAnchor>
+      }
+      if(isSuggestion){
+        return <TagAnchor interactiveType='suggestion'
+        onClick={onClick} {...sharedInteractiveProps}>{content}</TagAnchor>
+      }
+    }
+  )()
+
   return (
-    <Outline {...rest}>
-      <FlexBox
-        flexDirection="row"
-        {...rest}
-        width={readonly ? 'fit-content' : 'calc(100% - 24px)'}
+    <Outline disabled={disabled} readOnly={isReadOnly} {...rest} >
+      <TagLabelWrapper
+        readOnly={isReadOnly}
+        variant={variant}
+        overflow={isInteractive ? 'hidden' : 'visible'}
+        selectionDisabled={isSelection && disabled}
+        disabled={!isReadOnly && disabled}
       >
-        <TagLabelWrapper variant={variant} readOnly={readonly}>
-          <Text
-            as="span"
-            fontSize={tagLabelFontSize}
-            lineHeight={1 as any}
-            px={tagLabelPadding}
-            truncate="ellipsis"
-            truncateLines={1}
-          >
-            {children}
-          </Text>
-        </TagLabelWrapper>
-        {!readonly && (
-          <DismissButton
-            aria-label={`Dismiss ${children} Tag`}
-            onClick={onDismiss || undefined}
-            tip="Remove"
-            tipProps={{ placement: 'floating' }}
-            icon={StyledMiniDeleteIcon}
-            tagType={variant}
-            width="100%"
-          />
-        )}
-      </FlexBox>
+        { CorrectLabel }
+      </TagLabelWrapper>
+      {isSelection && (
+        <DismissButton
+          aria-label={disabled ? '' : `Dismiss ${children} Tag`}
+          onClick={onDismiss || undefined}
+          tip={disabled ? '' : "Remove"}
+          tipProps={{ placement: disabled ? undefined : 'floating' }}
+          icon={isLarge ? LargeMiniDeleteIcon : DefaultMiniDeleteIcon}
+          disabled={disabled}
+          aria-disabled={disabled}
+          isLarge={isLarge}
+        />
+      )}
     </Outline>
   );
 };
